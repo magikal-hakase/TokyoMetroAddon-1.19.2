@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "facing=north,type=bottom": { "model": "tokyometroaddon:block/aluminum_spindle" },
+    "facing=east,type=bottom":  { "model": "tokyometroaddon:block/aluminum_spindle", "y": 90 },
+    "facing=south,type=bottom": { "model": "tokyometroaddon:block/aluminum_spindle", "y": 180 },
+    "facing=west,type=bottom":  { "model": "tokyometroaddon:block/aluminum_spindle", "y": 270 },
+
+    "facing=north,type=top": { "model": "tokyometroaddon:block/aluminum_spindle_top" },
+    "facing=east,type=top":  { "model": "tokyometroaddon:block/aluminum_spindle_top", "y": 90 },
+    "facing=south,type=top": { "model": "tokyometroaddon:block/aluminum_spindle_top", "y": 180 },
+    "facing=west,type=top":  { "model": "tokyometroaddon:block/aluminum_spindle_top", "y": 270 },
+
+    "facing=north,type=double": { "model": "tokyometroaddon:block/aluminum_spindle_full" },
+    "facing=east,type=double":  { "model": "tokyometroaddon:block/aluminum_spindle_full", "y": 90 },
+    "facing=south,type=double": { "model": "tokyometroaddon:block/aluminum_spindle_full", "y": 180 },
+    "facing=west,type=double":  { "model": "tokyometroaddon:block/aluminum_spindle_full", "y": 270 }
+  }
+}

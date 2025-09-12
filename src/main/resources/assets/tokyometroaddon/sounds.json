@@ -1,0 +1,20 @@
+{
+  "block.guide_bell_sine": {
+    "subtitle": "subtitles.tokyometroaddon.guide_bell_sine",
+    "sounds": [
+      "tokyometroaddon:block/guide_bell_sine"
+    ]
+  },
+  "block.guide_bell_sawtooth": {
+    "subtitle": "subtitles.tokyometroaddon.guide_bell_sawtooth",
+    "sounds": [
+      "tokyometroaddon:block/guide_bell_sawtooth"
+    ]
+  },
+  "block.guide_bell_square": {
+    "subtitle": "subtitles.tokyometroaddon.guide_bell_square",
+    "sounds": [
+      "tokyometroaddon:block/guide_bell_square"
+    ]
+  }
+}

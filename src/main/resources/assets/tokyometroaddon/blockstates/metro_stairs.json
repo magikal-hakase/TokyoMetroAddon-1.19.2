@@ -1,0 +1,121 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "OR": [
+          { "stair_end": "middle" },
+          { "stair_end": "single" }
+        ]
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_middle" }
+    },
+    {
+      "when": {
+        "stair_end": "middle",
+        "shape": "inner_left"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_inner_middle" }
+    },
+    {
+      "when": {
+        "stair_end": "middle",
+        "shape": "inner_right"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_inner_middle", "y": 270 }
+    },
+    {
+      "when": {
+        "stair_end": "middle",
+        "shape": "outer_left"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_outer_middle" }
+    },
+    {
+      "when": {
+        "stair_end": "middle",
+        "shape": "outer_right"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_outer_middle", "y": 270 }
+    },
+    {
+      "when": { "stair_end": "left" },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_left" }
+    },
+    {
+      "when": {
+        "stair_end": "left",
+        "shape": "inner_left"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_inner_left" }
+    },
+    {
+      "when": {
+        "stair_end": "left",
+        "shape": "inner_right"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_inner_left", "y": 270 }
+    },
+    {
+      "when": {
+        "stair_end": "left",
+        "shape": "outer_left"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_outer_left" }
+    },
+    {
+      "when": {
+        "stair_end": "left",
+        "shape": "outer_right"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_outer_left", "y": 270 }
+    },
+    {
+      "when": { "stair_end": "right" },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_right" }
+    },
+    {
+      "when": {
+        "stair_end": "right",
+        "shape": "inner_left"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_inner_right" }
+    },
+    {
+      "when": {
+        "stair_end": "right",
+        "shape": "inner_right"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_inner_right", "y": 270 }
+    },
+    {
+      "when": {
+        "stair_end": "right",
+        "shape": "outer_left"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_outer_right" }
+    },
+    {
+      "when": {
+        "stair_end": "right",
+        "shape": "outer_right"
+      },
+      "apply": { "model": "tokyometroaddon:block/metro_stairs_outer_right", "y": 270 }
+    },
+    {
+      "when": { "half": "top" },
+      "apply": { "x": 180, "uvlock": true }
+    },
+    {
+      "when": { "facing": "east" },
+      "apply": { "y": 90 }
+    },
+    {
+      "when": { "facing": "south" },
+      "apply": { "y": 180 }
+    },
+    {
+      "when": { "facing": "west" },
+      "apply": { "y": 270 }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "tokyometroaddon:block/aluminum_spindle",
+    "top": "tokyometroaddon:block/aluminum_spindle",
+    "side": "tokyometroaddon:block/aluminum_spindle_side"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "tokyometroaddon:block/aluminum_spindle",
+    "side": "tokyometroaddon:block/aluminum_spindle_side"
+  }
+}

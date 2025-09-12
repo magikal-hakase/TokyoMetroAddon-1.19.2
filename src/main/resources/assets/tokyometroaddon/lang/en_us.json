@@ -1,0 +1,20 @@
+{
+  "item.tokyometroaddon.toolbox": "Toolbox",
+  "block.tokyometroaddon.white_mini_tile_block": "White mini tile",
+  "block.tokyometroaddon.red_mini_tile_block": "Red mini tile",
+  "block.tokyometroaddon.white_small_tile_block": "White small tile",
+  "block.tokyometroaddon.white_tile_block": "White tile",
+  "block.tokyometroaddon.metro_stairs": "Metro stairs",
+  "block.tokyometroaddon.aluminum_spindle": "Aluminum spindle",
+  "block.tokyometroaddon.fluorescent_light": "Fluorescent light",
+  "block.tokyometroaddon.guidance_block": "Guidance block",
+  "block.tokyometroaddon.caution_block": "Caution block",
+  "block.tokyometroaddon.caution_block_row": "A row of Caution block",
+  "block.tokyometroaddon.caution_block_with_guidance_block": "Caution block with Guidance block",
+  "block.tokyometroaddon.caution_block_enclosedline": "Caution block with Enclosed Line",
+  "block.tokyometroaddon.guide_bell_device": "Guidebell device",
+  "subtitles.tokyometroaddon.guide_bell_sine": "The guide bell rings",
+  "subtitles.tokyometroaddon.guide_bell_sawtooth": "The guide bell rings",
+  "subtitles.tokyometroaddon.guide_bell_square": "The guide bell rings",
+  "itemGroup.tokyometroaddon.tokyo_metro_addon_group": "TokyoMetroAddon"
+}

@@ -1,0 +1,20 @@
+{
+  "item.tokyometroaddon.toolbox": "工具箱",
+  "block.tokyometroaddon.white_mini_tile_block": "白ミニタイルブロック",
+  "block.tokyometroaddon.red_mini_tile_block": "赤ミニタイルブロック",
+  "block.tokyometroaddon.white_small_tile_block": "小さな白タイルブロック",
+  "block.tokyometroaddon.white_tile_block": "白タイルブロック",
+  "block.tokyometroaddon.metro_stairs": "地下鉄階段",
+  "block.tokyometroaddon.aluminum_spindle": "アルミスパンドレル",
+  "block.tokyometroaddon.fluorescent_light": "蛍光灯",
+  "block.tokyometroaddon.guidance_block": "誘導ブロック",
+  "block.tokyometroaddon.caution_block": "警告ブロック",
+  "block.tokyometroaddon.caution_block_row": "一列の警告ブロック",
+  "block.tokyometroaddon.caution_block_with_guidance_block": "警告ブロックと誘導ブロック",
+  "block.tokyometroaddon.caution_block_enclosedline": "内包線付き警告ブロック",
+  "block.tokyometroaddon.guide_bell_device": "盲導鈴装置",
+  "subtitles.tokyometroaddon.guide_bell_sine": "盲導鈴が鳴る",
+  "subtitles.tokyometroaddon.guide_bell_sawtooth": "盲導鈴が鳴る",
+  "subtitles.tokyometroaddon.guide_bell_square": "盲導鈴が鳴る",
+  "itemGroup.tokyometroaddon.tokyo_metro_addon_group": "TokyoMetroAddon"
+}

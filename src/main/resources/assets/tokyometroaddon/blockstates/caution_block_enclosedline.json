@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "tokyometroaddon:block/caution_block_enclosedline" },
+    "facing=east": { "model": "tokyometroaddon:block/caution_block_enclosedline", "y": 90 },
+    "facing=south": { "model": "tokyometroaddon:block/caution_block_enclosedline", "y": 180 },
+    "facing=west": { "model": "tokyometroaddon:block/caution_block_enclosedline", "y": 270 }
+  }
+}

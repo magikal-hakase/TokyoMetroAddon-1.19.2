@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "sound_type=sine": { "model": "tokyometroaddon:block/guide_bell_device_sine" },
+    "sound_type=sawtooth": { "model": "tokyometroaddon:block/guide_bell_device_sawtooth" },
+    "sound_type=square": { "model": "tokyometroaddon:block/guide_bell_device_square" }
+  }
+}
