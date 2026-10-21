@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "tokyometroaddon:block/poster_notice" },
+    "facing=east": { "model": "tokyometroaddon:block/poster_notice", "y": 90 },
+    "facing=south": { "model": "tokyometroaddon:block/poster_notice", "y": 180 },
+    "facing=west": { "model": "tokyometroaddon:block/poster_notice", "y": 270 }
+  }
+}

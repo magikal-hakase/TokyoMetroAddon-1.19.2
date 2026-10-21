@@ -1,18 +1,19 @@
 package com.magikal_hakase;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class TokyoMetroAddonItems {
-    public static final Item TOOLBOX = registerItem("toolbox",
-            new Item(new FabricItemSettings()));
+    public static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(ForgeRegistries.ITEMS, TokyoMetroAddon.MOD_ID);
 
-    public static void register() {
-    }
+    public static final RegistryObject<Item> TOOLBOX = ITEMS.register("toolbox",
+            () -> new Item(new Item.Properties()));
 
-    private static Item registerItem(String name, Item item) {
-        return Registry.register(Registry.ITEM, new Identifier(TokyoMetroAddon.MOD_ID, name), item);
+    public static void register(IEventBus modEventBus) {
+        ITEMS.register(modEventBus);
     }
 }

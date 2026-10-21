@@ -1,54 +1,56 @@
 package com.magikal_hakase;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.enums.SlabType;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.level.material.Fluids;
 
 public class DirectionalSlabBlock extends SlabBlock {
 
-    // 向きを保存するためのプロパティ
-    public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+    // Property that stores the facing direction
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public DirectionalSlabBlock(Settings settings) {
-        super(settings);
-        // デフォルトの状態を設定（下付き、北向き、水没なし）
-        setDefaultState(this.stateManager.getDefaultState()
-                .with(TYPE, SlabType.BOTTOM)
-                .with(FACING, Direction.NORTH)
-                .with(WATERLOGGED, false));
+    public DirectionalSlabBlock(Properties properties) {
+        super(properties);
+        // Default state: bottom slab, facing north, not waterlogged
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(TYPE, SlabType.BOTTOM)
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        // --- ここからスラブの性質を決める処理 (SlabBlockから引用) ---
-        BlockPos blockPos = ctx.getBlockPos();
-        BlockState blockState = ctx.getWorld().getBlockState(blockPos);
-        if (blockState.isOf(this)) {
-            // 既に同じスラブがある場合はダブルスラブにする
-            return blockState.with(TYPE, SlabType.DOUBLE).with(WATERLOGGED, false);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        // --- Slab placement logic (borrowed from SlabBlock) ---
+        BlockPos blockPos = ctx.getClickedPos();
+        BlockState blockState = ctx.getLevel().getBlockState(blockPos);
+        if (blockState.is(this)) {
+            // Placing on an existing slab of the same type -> double slab
+            return blockState.setValue(TYPE, SlabType.DOUBLE).setValue(WATERLOGGED, false);
         }
-        boolean waterlogged = ctx.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER;
-        SlabType slabType = ctx.getHitPos().y - (double)blockPos.getY() > 0.5 ? SlabType.TOP : SlabType.BOTTOM;
+        boolean waterlogged = ctx.getLevel().getFluidState(blockPos).getType() == Fluids.WATER;
+        SlabType slabType = ctx.getClickLocation().y - (double) blockPos.getY() > 0.5
+                ? SlabType.TOP : SlabType.BOTTOM;
 
-        // --- 向きの性質とスラブの性質を組み合わせて返す ---
-        return this.getDefaultState()
-                .with(TYPE, slabType)
-                .with(FACING, ctx.getPlayerFacing().getOpposite()) // プレイヤーの向きから設置方向を決める
-                .with(WATERLOGGED, waterlogged);
+        // --- Combine slab properties with the facing direction ---
+        return this.defaultBlockState()
+                .setValue(TYPE, slabType)
+                .setValue(FACING, ctx.getHorizontalDirection().getOpposite())
+                .setValue(WATERLOGGED, waterlogged);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        // このブロックが持つ状態をすべて登録する
-        super.appendProperties(builder); // SlabBlockのTYPEとWATERLOGGEDを継承
-        builder.add(FACING); // 新たに向きのプロパティを追加
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        // Inherit TYPE and WATERLOGGED from SlabBlock
+        super.createBlockStateDefinition(builder);
+        // Add the new facing property
+        builder.add(FACING);
     }
 }

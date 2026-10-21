@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "tokyometroaddon:block/blue_mini_tile_block"
+  }
+}

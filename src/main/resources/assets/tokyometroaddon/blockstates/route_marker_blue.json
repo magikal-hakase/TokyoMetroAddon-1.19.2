@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "tokyometroaddon:block/route_marker_blue" },
+    "facing=east": { "model": "tokyometroaddon:block/route_marker_blue", "y": 90 },
+    "facing=south": { "model": "tokyometroaddon:block/route_marker_blue", "y": 180 },
+    "facing=west": { "model": "tokyometroaddon:block/route_marker_blue", "y": 270 }
+  }
+}

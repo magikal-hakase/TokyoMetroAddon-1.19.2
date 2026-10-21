@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "tokyometroaddon:block/aluminum_spindle_full" },
+    "facing=east": { "model": "tokyometroaddon:block/aluminum_spindle_full", "y": 90 },
+    "facing=south": { "model": "tokyometroaddon:block/aluminum_spindle_full", "y": 180 },
+    "facing=west": { "model": "tokyometroaddon:block/aluminum_spindle_full", "y": 270 }
+  }
+}

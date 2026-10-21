@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "tokyometroaddon:block/emergency_exit_sign" },
+    "facing=east": { "model": "tokyometroaddon:block/emergency_exit_sign", "y": 90 },
+    "facing=south": { "model": "tokyometroaddon:block/emergency_exit_sign", "y": 180 },
+    "facing=west": { "model": "tokyometroaddon:block/emergency_exit_sign", "y": 270 }
+  }
+}

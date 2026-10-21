@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "facing=north,part=single": { "model": "tokyometroaddon:block/stainless_steel_fence_single" },
+    "facing=east,part=single":  { "model": "tokyometroaddon:block/stainless_steel_fence_single", "y": 90 },
+    "facing=south,part=single": { "model": "tokyometroaddon:block/stainless_steel_fence_single", "y": 180 },
+    "facing=west,part=single":  { "model": "tokyometroaddon:block/stainless_steel_fence_single", "y": 270 },
+
+    "facing=north,part=left": { "model": "tokyometroaddon:block/stainless_steel_fence_left" },
+    "facing=east,part=left":  { "model": "tokyometroaddon:block/stainless_steel_fence_left", "y": 90 },
+    "facing=south,part=left": { "model": "tokyometroaddon:block/stainless_steel_fence_left", "y": 180 },
+    "facing=west,part=left":  { "model": "tokyometroaddon:block/stainless_steel_fence_left", "y": 270 },
+
+    "facing=north,part=right": { "model": "tokyometroaddon:block/stainless_steel_fence_right" },
+    "facing=east,part=right":  { "model": "tokyometroaddon:block/stainless_steel_fence_right", "y": 90 },
+    "facing=south,part=right": { "model": "tokyometroaddon:block/stainless_steel_fence_right", "y": 180 },
+    "facing=west,part=right":  { "model": "tokyometroaddon:block/stainless_steel_fence_right", "y": 270 }
+  }
+}

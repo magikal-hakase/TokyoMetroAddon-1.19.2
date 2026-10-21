@@ -1,40 +1,28 @@
-# gradle
-
+# Gradle
 .gradle/
 build/
+run/
 out/
-classes/
+*.class
 
-# eclipse
-
-*.launch
-
-# idea
-
+# IDE
 .idea/
 *.iml
 *.ipr
 *.iws
-
-# vscode
-
-.settings/
 .vscode/
-bin/
-.classpath
+.settings/
 .project
+.classpath
+bin/
+*.launch
 
-# macos
-
-*.DS_Store
-
-# fabric
-
-run/
-
-# java
-
+# Toolchain / misc
 hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+*.DS_Store
+
+# Local maven repo output
+mcmodsrepo/

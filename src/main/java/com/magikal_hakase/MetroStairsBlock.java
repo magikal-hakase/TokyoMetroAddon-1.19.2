@@ -1,67 +1,70 @@
 package com.magikal_hakase;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.block.state.properties.StairsShape;
 
 import java.util.Objects;
 
-public class MetroStairsBlock extends StairsBlock {
-    public static final EnumProperty<StairEnd> STAIR_END = EnumProperty.of("stair_end", StairEnd.class);
+public class MetroStairsBlock extends StairBlock {
+    public static final EnumProperty<StairEnd> STAIR_END = EnumProperty.create("stair_end", StairEnd.class);
 
-    public MetroStairsBlock(BlockState baseBlockState, Settings settings) {
-        super(baseBlockState, settings);
-        // デフォルトの状態を設定
-        setDefaultState(this.stateManager.getDefaultState()
-                .with(STAIR_END, StairEnd.SINGLE)
-                .with(FACING, Direction.NORTH)
-                .with(HALF, net.minecraft.block.enums.BlockHalf.BOTTOM)
-                .with(SHAPE, net.minecraft.block.enums.StairShape.STRAIGHT)
-                .with(WATERLOGGED, false)
-        );
+    public MetroStairsBlock(BlockState baseBlockState, Properties properties) {
+        super(baseBlockState, properties);
+        // Default state
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(STAIR_END, StairEnd.SINGLE)
+                .setValue(FACING, Direction.NORTH)
+                .setValue(HALF, Half.BOTTOM)
+                .setValue(SHAPE, StairsShape.STRAIGHT)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(STAIR_END);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        // 設置時の状態を計算
-        BlockState state = super.getPlacementState(ctx);
-        return Objects.requireNonNull(state).with(STAIR_END, getEndState(state, ctx.getWorld(), ctx.getBlockPos()));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        // Compute the state at placement
+        BlockState state = super.getStateForPlacement(ctx);
+        return Objects.requireNonNull(state)
+                .setValue(STAIR_END, getEndState(state, ctx.getLevel(), ctx.getClickedPos()));
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        // 周囲のブロックが更新された時の状態を再計算
-        BlockState updatedState = super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
-        return updatedState.with(STAIR_END, getEndState(updatedState, world, pos));
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
+                                  LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+        // Recompute the state when neighboring blocks update
+        BlockState updatedState = super.updateShape(state, direction, neighborState, world, pos, neighborPos);
+        return updatedState.setValue(STAIR_END, getEndState(updatedState, world, pos));
     }
 
-    // 端の状態を判断する核心的なロジック
-    private StairEnd getEndState(BlockState state, WorldAccess world, BlockPos pos) {
-        Direction facing = state.get(FACING);
+    // Core logic that determines the end state
+    private StairEnd getEndState(BlockState state, LevelAccessor world, BlockPos pos) {
+        Direction facing = state.getValue(FACING);
 
-        // 自分の向きに対する「右」と「左」の方向を取得
-        Direction rightDir = facing.rotateYClockwise();
-        Direction leftDir = facing.rotateYCounterclockwise();
+        // "Right" and "left" directions relative to the facing
+        Direction rightDir = facing.getClockWise();
+        Direction leftDir = facing.getCounterClockWise();
 
-        // 左右のブロックを取得
-        BlockState rightNeighbor = world.getBlockState(pos.offset(rightDir));
-        BlockState leftNeighbor = world.getBlockState(pos.offset(leftDir));
+        // Get left and right neighbor blocks
+        BlockState rightNeighbor = world.getBlockState(pos.relative(rightDir));
+        BlockState leftNeighbor = world.getBlockState(pos.relative(leftDir));
 
-        // 左右のブロックが同じ種類の階段か、かつ同じ向きかをチェック
-        boolean hasRight = rightNeighbor.isOf(this) && rightNeighbor.get(FACING) == facing;
-        boolean hasLeft = leftNeighbor.isOf(this) && leftNeighbor.get(FACING) == facing;
+        // Check whether both neighbors are the same stairs type with the same facing
+        boolean hasRight = rightNeighbor.is(this) && rightNeighbor.getValue(FACING) == facing;
+        boolean hasLeft = leftNeighbor.is(this) && leftNeighbor.getValue(FACING) == facing;
 
         if (hasLeft && hasRight) {
             return StairEnd.MIDDLE;

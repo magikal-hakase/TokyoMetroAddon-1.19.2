@@ -1,0 +1,43 @@
+{
+  "variants": {
+    "facing=north,has_pole=true,part=single": { "model": "tokyometroaddon:block/metro_bench_single" },
+    "facing=north,has_pole=true,part=left":   { "model": "tokyometroaddon:block/metro_bench_left" },
+    "facing=north,has_pole=true,part=middle": { "model": "tokyometroaddon:block/metro_bench_middle" },
+    "facing=north,has_pole=true,part=right":  { "model": "tokyometroaddon:block/metro_bench_right" },
+
+    "facing=north,has_pole=false,part=single": { "model": "tokyometroaddon:block/metro_bench_nopole_single" },
+    "facing=north,has_pole=false,part=left":   { "model": "tokyometroaddon:block/metro_bench_nopole_left" },
+    "facing=north,has_pole=false,part=middle": { "model": "tokyometroaddon:block/metro_bench_nopole_middle" },
+    "facing=north,has_pole=false,part=right":  { "model": "tokyometroaddon:block/metro_bench_nopole_right" },
+
+    "facing=east,has_pole=true,part=single": { "model": "tokyometroaddon:block/metro_bench_single", "y": 90 },
+    "facing=east,has_pole=true,part=left":   { "model": "tokyometroaddon:block/metro_bench_left", "y": 90 },
+    "facing=east,has_pole=true,part=middle": { "model": "tokyometroaddon:block/metro_bench_middle", "y": 90 },
+    "facing=east,has_pole=true,part=right":  { "model": "tokyometroaddon:block/metro_bench_right", "y": 90 },
+
+    "facing=east,has_pole=false,part=single": { "model": "tokyometroaddon:block/metro_bench_nopole_single", "y": 90 },
+    "facing=east,has_pole=false,part=left":   { "model": "tokyometroaddon:block/metro_bench_nopole_left", "y": 90 },
+    "facing=east,has_pole=false,part=middle": { "model": "tokyometroaddon:block/metro_bench_nopole_middle", "y": 90 },
+    "facing=east,has_pole=false,part=right":  { "model": "tokyometroaddon:block/metro_bench_nopole_right", "y": 90 },
+
+    "facing=south,has_pole=true,part=single": { "model": "tokyometroaddon:block/metro_bench_single", "y": 180 },
+    "facing=south,has_pole=true,part=left":   { "model": "tokyometroaddon:block/metro_bench_left", "y": 180 },
+    "facing=south,has_pole=true,part=middle": { "model": "tokyometroaddon:block/metro_bench_middle", "y": 180 },
+    "facing=south,has_pole=true,part=right":  { "model": "tokyometroaddon:block/metro_bench_right", "y": 180 },
+
+    "facing=south,has_pole=false,part=single": { "model": "tokyometroaddon:block/metro_bench_nopole_single", "y": 180 },
+    "facing=south,has_pole=false,part=left":   { "model": "tokyometroaddon:block/metro_bench_nopole_left", "y": 180 },
+    "facing=south,has_pole=false,part=middle": { "model": "tokyometroaddon:block/metro_bench_nopole_middle", "y": 180 },
+    "facing=south,has_pole=false,part=right":  { "model": "tokyometroaddon:block/metro_bench_nopole_right", "y": 180 },
+
+    "facing=west,has_pole=true,part=single": { "model": "tokyometroaddon:block/metro_bench_single", "y": 270 },
+    "facing=west,has_pole=true,part=left":   { "model": "tokyometroaddon:block/metro_bench_left", "y": 270 },
+    "facing=west,has_pole=true,part=middle": { "model": "tokyometroaddon:block/metro_bench_middle", "y": 270 },
+    "facing=west,has_pole=true,part=right":  { "model": "tokyometroaddon:block/metro_bench_right", "y": 270 },
+
+    "facing=west,has_pole=false,part=single": { "model": "tokyometroaddon:block/metro_bench_nopole_single", "y": 270 },
+    "facing=west,has_pole=false,part=left":   { "model": "tokyometroaddon:block/metro_bench_nopole_left", "y": 270 },
+    "facing=west,has_pole=false,part=middle": { "model": "tokyometroaddon:block/metro_bench_nopole_middle", "y": 270 },
+    "facing=west,has_pole=false,part=right":  { "model": "tokyometroaddon:block/metro_bench_nopole_right", "y": 270 }
+  }
+}

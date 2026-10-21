@@ -1,8 +1,8 @@
 package com.magikal_hakase;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
-public enum GuideBellSound implements StringIdentifiable {
+public enum GuideBellSound implements StringRepresentable {
     SINE("sine"),
     SAWTOOTH("sawtooth"),
     SQUARE("square");
@@ -14,11 +14,11 @@ public enum GuideBellSound implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 
-    // 次のサウンドを取得する便利なメソッド
+    // Convenient method to get the next sound
     public GuideBellSound next() {
         return values()[(this.ordinal() + 1) % values().length];
     }

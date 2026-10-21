@@ -1,12 +1,12 @@
 package com.magikal_hakase;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
-public enum StairEnd implements StringIdentifiable {
-    SINGLE("single"), // 単体
-    LEFT("left"),     // 左端
-    RIGHT("right"),   // 右端
-    MIDDLE("middle"); // 中間
+public enum StairEnd implements StringRepresentable {
+    SINGLE("single"), // Single
+    LEFT("left"),     // Left end
+    RIGHT("right"),   // Right end
+    MIDDLE("middle"); // Middle
 
     private final String name;
 
@@ -15,7 +15,7 @@ public enum StairEnd implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 }

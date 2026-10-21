@@ -1,109 +1,110 @@
 package com.magikal_hakase;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class FluorescentLightBlock extends HorizontalFacingBlock {
+public class FluorescentLightBlock extends HorizontalDirectionalBlock {
 
-    // 新しい状態プロパティ (単体、始点、終点)
-    public static final EnumProperty<FluorescentLightPart> PART = EnumProperty.of("part", FluorescentLightPart.class);
+    // New state property (single, start, end)
+    public static final EnumProperty<FluorescentLightPart> PART =
+            EnumProperty.create("part", FluorescentLightPart.class);
 
-    // 当たり判定 (必要に応じて調整)
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 4.0, 0.0, 16.0, 12.0, 16.0);
+    protected static final VoxelShape SHAPE = Block.box(0.0, 4.0, 0.0, 16.0, 12.0, 16.0);
 
-    public FluorescentLightBlock(Settings settings) {
-        super(settings);
-        // デフォルトの状態を設定（北向きの単体）
-        setDefaultState(this.stateManager.getDefaultState()
-                .with(FACING, Direction.NORTH)
-                .with(PART, FluorescentLightPart.SINGLE));
+    // North-south facing (Z axis) collision shape
+    protected static final VoxelShape SHAPE_NS = Block.box(5.5, 14.5, 0.0, 10.5, 16.0, 16.0);
+    // East-west facing (X axis) collision shape
+    protected static final VoxelShape SHAPE_EW = Block.box(0.0, 14.5, 5.5, 16.0, 16.0, 10.5);
+
+    public FluorescentLightBlock(Properties properties) {
+        super(properties);
+        // Default state: north facing single part
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(PART, FluorescentLightPart.SINGLE));
     }
 
-    protected static final VoxelShape SHAPE_NS = Block.createCuboidShape(5.5, 14.5, 0.0, 10.5, 16.0, 16.0);
-    // 東西向き(X軸方向)の当たり判定
-    protected static final VoxelShape SHAPE_EW = Block.createCuboidShape(0.0, 14.5, 5.5, 16.0, 16.0, 10.5);
-
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        // ブロックの向き(FACING)に応じて当たり判定を切り替える
-        switch (state.get(FACING)) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(FACING)) {
             case EAST:
             case WEST:
-                return SHAPE_EW; // 東西向きの場合はSHAPE_EWを返す
+                return SHAPE_EW;
             case NORTH:
             case SOUTH:
-            default: // デフォルトも設定しておく
-                return SHAPE_NS; // 南北向きの場合はSHAPE_NSを返す
+            default:
+                return SHAPE_NS;
         }
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction playerFacing = ctx.getPlayerFacing().getOpposite();
-        BlockPos posToPlace = ctx.getBlockPos();
-        World world = ctx.getWorld();
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Direction playerFacing = ctx.getHorizontalDirection().getOpposite();
+        BlockPos posToPlace = ctx.getClickedPos();
+        Level world = ctx.getLevel();
 
-        // 自分の後ろ側（接続元）になるブロックの位置を確認
-        BlockPos neighborPos = posToPlace.offset(playerFacing.getOpposite());
+        // Check the block behind the placement position (the connection source)
+        BlockPos neighborPos = posToPlace.relative(playerFacing.getOpposite());
         BlockState neighborState = world.getBlockState(neighborPos);
 
-        // 隣のブロックが接続可能な「単体」の蛍光灯かチェック
-        if (neighborState.isOf(this) && neighborState.get(PART) == FluorescentLightPart.SINGLE) {
-            Direction neighborFacing = neighborState.get(FACING);
-            // 隣のブロックが自分の方を向いているかチェック
+        // Check whether the neighbor is a connectable "single" fluorescent light
+        if (neighborState.is(this) && neighborState.getValue(PART) == FluorescentLightPart.SINGLE) {
+            Direction neighborFacing = neighborState.getValue(FACING);
+            // Check whether the neighbor faces towards this position
             if (neighborFacing == playerFacing) {
-                // 隣のブロックの状態を「始点(START)」に更新
-                world.setBlockState(neighborPos, neighborState.with(PART, FluorescentLightPart.START), 3);
-                // 自分は「終点(END)」として設置される
-                return this.getDefaultState().with(FACING, playerFacing).with(PART, FluorescentLightPart.END);
+                // Update the neighbor to "START"
+                world.setBlock(neighborPos, neighborState.setValue(PART, FluorescentLightPart.START), 3);
+                // This block is placed as "END"
+                return this.defaultBlockState().setValue(FACING, playerFacing)
+                        .setValue(PART, FluorescentLightPart.END);
             }
         }
 
-        // どの条件にも当てはまらない場合は「単体(SINGLE)」として設置
-        return this.getDefaultState().with(FACING, playerFacing).with(PART, FluorescentLightPart.SINGLE);
+        // Otherwise place as "SINGLE"
+        return this.defaultBlockState().setValue(FACING, playerFacing)
+                .setValue(PART, FluorescentLightPart.SINGLE);
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        // このブロックが破壊された場合
-        if (!state.isOf(newState.getBlock())) {
-            // 自分がペアの一部だった場合、相方のブロックを「単体」に戻す
-            Direction facing = state.get(FACING);
-            FluorescentLightPart part = state.get(PART);
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
+        // When this block is destroyed
+        if (!state.is(newState.getBlock())) {
+            // If this was part of a pair, reset the other block back to "SINGLE"
+            Direction facing = state.getValue(FACING);
+            FluorescentLightPart part = state.getValue(PART);
 
-            // 自分が始点(START)なら、終点(END)だったブロックを探して単体に戻す
+            // If this was START, find the END block and reset it
             if (part == FluorescentLightPart.START) {
-                BlockPos endPos = pos.offset(facing);
+                BlockPos endPos = pos.relative(facing);
                 BlockState endState = world.getBlockState(endPos);
-                if (endState.isOf(this) && endState.get(PART) == FluorescentLightPart.END) {
-                    world.setBlockState(endPos, endState.with(PART, FluorescentLightPart.SINGLE), 3);
+                if (endState.is(this) && endState.getValue(PART) == FluorescentLightPart.END) {
+                    world.setBlock(endPos, endState.setValue(PART, FluorescentLightPart.SINGLE), 3);
                 }
             }
-            // 自分が終点(END)なら、始点(START)だったブロックを探して単体に戻す
+            // If this was END, find the START block and reset it
             else if (part == FluorescentLightPart.END) {
-                BlockPos startPos = pos.offset(facing.getOpposite());
+                BlockPos startPos = pos.relative(facing.getOpposite());
                 BlockState startState = world.getBlockState(startPos);
-                if (startState.isOf(this) && startState.get(PART) == FluorescentLightPart.START) {
-                    world.setBlockState(startPos, startState.with(PART, FluorescentLightPart.SINGLE), 3);
+                if (startState.is(this) && startState.getValue(PART) == FluorescentLightPart.START) {
+                    world.setBlock(startPos, startState.setValue(PART, FluorescentLightPart.SINGLE), 3);
                 }
             }
         }
-        super.onStateReplaced(state, world, pos, newState, moved);
+        super.onRemove(state, world, pos, newState, moved);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        // FACING と PART プロパティを登録
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, PART);
     }
 }
